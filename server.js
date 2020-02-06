@@ -20,7 +20,7 @@ app.post('/', (req, res) => {
     shell.cd(path);
 	shell.exec('rm -drf ContinuousIntegration');
 
-	shell.exec('git clone ' + req.body.repository.html_url);
+	shell.exec('git clone -b assessment' + ' ' + req.body.repository.html_url);
 	
     
 
