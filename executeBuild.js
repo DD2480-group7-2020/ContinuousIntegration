@@ -14,7 +14,9 @@ function run(command) {
     }
     try {
         res = execSync(command,
+
              {cwd: './ContinuousIntegration'});
+
         obj.logs.push(res.toString())
     } catch(error) {
         //error = error.message.split("")[0]

@@ -3,8 +3,8 @@ const config = require('./config_server.json')
 
 function get_sha(req) {
 
-	var sha = req.body.head_commit.id
-    
+    var sha = req.body.head_commit.id
+
     return sha
 }
 
@@ -20,7 +20,7 @@ function set_status(req, status) {
     sha = get_sha(req)
     var repo_id = req.body.repository.id
     var res
-	console.log(status)
+
 
     status = {
         state: status,
@@ -30,7 +30,7 @@ function set_status(req, status) {
     } 
 
     var token = "Bearer " + config['token']
-	console.log(status)
+
     request({
         url: url,
         method: "POST",

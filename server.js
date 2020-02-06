@@ -7,7 +7,9 @@ const app = express()
 const port = 3001
 const fs = require('fs');
 const executeBuild = require('./executeBuild.js')
+
 const shell = require('shelljs')
+
 
 app.use(bodyParser.json())
 
@@ -15,25 +17,26 @@ app.use(bodyParser.json())
     Handles web-hooks POST request.
 */
 app.post('/', (req, res) => {
+
 	var body = req.body;
-    const path = '/home/ubuntu/ci';
-    shell.cd(path);
+  const path = '/home/ubuntu/ci';
+  shell.cd(path);
 	shell.exec('rm -drf ContinuousIntegration');
 
 	shell.exec('git clone -b assessment' + ' ' + req.body.repository.html_url);
 	
     
 
-    console.log(body);
+  console.log(body);
 	console.log(req.body.repository.id)
 
-	
 
 /*
     Example set_status 
     Note that status can be one of error, failure, pending, or success
     Don't forget to enter your token to token.json and remove it when push
 */
+
     //helper.set_status(req, 'pending')
 	if (executeBuild.execute().flag == true){
 		console.log('success');
@@ -45,6 +48,7 @@ app.post('/', (req, res) => {
 	}
     res.send('finished' + executeBuild.execute().flag);
 	
+
 })
 
 app.get('/', (req, res) => res.send('Hello World!'))
