@@ -35,7 +35,7 @@ describe('Webhook functions', function() {
                 body: push_master_body
             }
             assert.equal(helper.get_url(req),
-            'https://api.github.com/repos/DD2480-group7-2020/decide/statuses/218bb0a6f5dd1e4500e6f559ea7dd56bfea5151a'
+            'https://api.githubyfuyf.com/repos/DD2480-group7-2020/decide/statuses/218bb0a6f5dd1e4500e6f559ea7dd56bfea5151a'
             )
         })
     })
