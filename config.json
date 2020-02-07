@@ -1,5 +1,5 @@
 {
-    "install": "",
-    "syntax": "python3 main.py",
-    "tests": "python3 -m unittest lic_test.py"
+    "install": "npm i",
+    "syntax": "npm run lint",
+    "tests": "npm run test"
 }
