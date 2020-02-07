@@ -13,7 +13,7 @@ class LICTestCase(unittest.TestCase):
         self.assertTrue(main.euclidean_dist(p1, p2) == 5);
         p1 = [0,0];
         p2 = [-3,4];
-        self.assertFalse(main.euclidean_dist(p1, p2) == 5);
+        self.assertTrue(main.euclidean_dist(p1, p2) == 5);
         p1 = [0,0];
         p2 = [0,0];
         self.assertTrue(main.euclidean_dist(p1, p2) == 0);
