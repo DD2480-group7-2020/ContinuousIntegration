@@ -1,68 +1,33 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# Continuous Integration
+This project is a continuous integration (CI) server integrated with Github and Firebase. At the moment, it is able to test and build small projects.
 
-In the project directory, you can run:
+# Running
+To run the backend server, go to the backend directory and use the command `npm start`.
 
-### `yarn start`
+To run the frontend server, go to the frontend directory and use the command `npm start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To run the tests, use `npm test`
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+To generate the documentation, use `npm docs`
 
-### `yarn test`
+# Configuration
+There are several different config files for this project. The `config.json` is used to provide shell scripts in three stages. `install` is used to to install project dependencies. `syntax` is used for syntax checking and building the project. `tests` is used for running unit tests and such. A successful build must pass all three stages. If no script is provided for a certain stages, then it automatically passes said stage.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The `config_server.json` contains three keys. `token` is used to connect with the [github API](https://developer.github.com/v3/repos/statuses/). `database` is used to provide a link to the database from the github status message. Finally, `build_path_prefix` is used to set a custom build folder location of the tested project.
 
-### `yarn build`
+The final configuration is inlined in `src/controllersfirebase_controller.js` and is the firebase configuration config which contains api keys and such.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Dependencies
+This project mainly uses nodemon, express, firebase. All dependencies can be installed by the command `npm install`
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+# Server access
+To access the AWS ubuntu server, ssh into ubuntu@ec2-54-198-38-54.compute-1.amazonaws.com at port 22.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Statement of Contributions
+  #### Love Almgren - Parsed the config file, running the configuration, saving the test output logs
+  #### Ramiz Dundar - Rest API, Webhook functions + unit tests, Created Github secret key token
+  #### Simon Siren - Setup firebase, retrieve data from firebase
+  #### Fabian Waxin - Deploy AWS server, Setup NodeJS server, Firebase, Frontend
+  #### Gustav Ung - Integrate server, firebase and Github 
 
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

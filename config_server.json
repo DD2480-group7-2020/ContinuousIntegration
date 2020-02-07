@@ -1,0 +1,5 @@
+{
+    "token": "Instert your OAUTH key here",
+    "database": "https://aws_ip:3002/repo",
+    "build_path_prefix": "/tmp/"
+}
