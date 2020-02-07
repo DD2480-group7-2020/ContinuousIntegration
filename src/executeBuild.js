@@ -16,6 +16,8 @@ var obj = {
 
 /**
  * Prepares a build environment for the scripts to run in.
+ * @author Gustav Ung
+ * @return {void}
  */
 function prepare_build_env() {
     return server_config.build_path_prefix + uuidv1()
@@ -23,6 +25,10 @@ function prepare_build_env() {
 
 /**
  * Clones a git reposityory given a clonable repository url at a given build path
+ * @author Gustav Ung
+ * @param {string} repository The url to the git repository
+ * @param {string} path The build path
+ * @return {void}
  */
 function clone_repository(repository, path) {
     execSync("git clone -b develop " + repository + " " + path)
@@ -30,6 +36,9 @@ function clone_repository(repository, path) {
 
 /**
  * Cleans a given build environment path.
+ * @author Gustav Ung
+ * @param {string} path The path to the build environment
+ * @return {void}
  */
 function clean_build_env(path) {
     console.log("Removing dir" + path)
@@ -37,7 +46,11 @@ function clean_build_env(path) {
 }
 
 /**
- * Runs three shell commands defined globally, and returns whether they all succeded or not.
+ * Runs three shell commands defined globally
+ * @author Love Almgren
+ * @param {string} path the path where the shell commands are run
+ * @param {string} install, syntax tests the three commands to run
+ * @return whether they all succeded or not.
  */
 function executeEverything(path, install, syntax, tests) {
     return run(path, install) && run(path, syntax) && run(path, tests)
@@ -46,8 +59,10 @@ function executeEverything(path, install, syntax, tests) {
 /**
  * Runs the provided shell command and returns if it succeded or not.
  * This function also mutates a global log file.
+ * @author Love Almgren
  * @param {string} command - The command to run.
- */
+ * @return {boolean} whether the command ran successfully or not
+*/
 function run(path, command) {
     var truth = true
     if(command === "") {
