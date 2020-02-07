@@ -2,7 +2,13 @@
 This project is a continuous integration (CI) server integrated with Github and Firebase. At the moment, it is able to test and build small projects.
 
 # Running
-To run the server use the command `npm start`.
+To run the backend server, go to the backend directory and use the command `npm start`.
+
+To run the frontend server, go to the frontend directory and use the command `npm start`
+
+To run the tests, use `npm test`
+
+To generate the documentation, use `npm docs`
 
 # Configuration
 There are several different config files for this project. The `config.json` is used to provide shell scripts in three stages. `install` is used to to install project dependencies. `syntax` is used for syntax checking and building the project. `tests` is used for running unit tests and such. A successful build must pass all three stages. If no script is provided for a certain stages, then it automatically passes said stage.
