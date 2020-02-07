@@ -1,4 +1,5 @@
-# Continuous Integration22233
+
+# Continuous Integration
 This project is a continuous integration (CI) server integrated with Github and Firebase. At the moment, it is able to test and build small projects.
 
 # Running
@@ -29,3 +30,4 @@ To access the AWS ubuntu server, ssh into ubuntu@ec2-54-198-38-54.compute-1.amaz
   #### Simon Siren - Setup firebase, retrieve data from firebase
   #### Fabian Waxin - Deploy AWS server, Setup NodeJS server, Firebase, Frontend
   #### Gustav Ung - Integrate server, firebase and Github 
+
