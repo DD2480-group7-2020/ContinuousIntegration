@@ -16,3 +16,10 @@ This project mainly uses nodemon, express, firebase. All dependencies can be ins
 
 # Server access
 To access the AWS ubuntu server, ssh into ubuntu@ec2-54-198-38-54.compute-1.amazonaws.com at port 22.
+
+# Statement of Contributions
+  Love Almgren - Parsed the config file, running the configuration, saving the test output logs
+  Ramiz - Rest API, Webhook functions + unit tests, Created Github secret key token
+  Simon - Setup firebase, retrieve data from firebase
+  Fabian - Deploy AWS server, Setup NodeJS server, Firebase, Frontend
+  Gustav - Integrate server, firebase and Github 
