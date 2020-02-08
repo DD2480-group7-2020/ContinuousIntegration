@@ -11,7 +11,7 @@ To run the tests, use `npm test`
 To generate the documentation, use `npm docs`
 
 # Configuration
-There are several different config files for this project. The `config.json` is used to provide shell scripts in three stages. `install` is used to to install project dependencies. `syntax` is used for syntax checking and building the project. `tests` is used for running unit tests and such. A successful build must pass all three stages. If no script is provided for a certain stages, then it automatically passes said stage.
+There are several different config files for this project. The `config.json` is used to provide shell scripts in three stages. `install` is used to to install project dependencies. `syntax` is used for syntax checking and building the project. `tests` is used for running unit tests and such. A successful build must pass all three stages. If no script is provided for a certain stages, then it automatically passes said stage. This config file should exist in the top-level of the target repo.
 
 The `config_server.json` contains three keys. `token` is used to connect with the [github API](https://developer.github.com/v3/repos/statuses/). `database` is used to provide a link to the database from the github status message. Finally, `build_path_prefix` is used to set a custom build folder location of the tested project.
 
