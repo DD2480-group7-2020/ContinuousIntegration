@@ -1,0 +1,36 @@
+{
+
+  "name": "continuousintegration",
+  "version": "1.0.0",
+  "description": "Continuous Integration Server",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon src/server.js",
+    "test": "mocha tests/*.js",
+    "lint": "eslint src/*.js src/controllers/*.js",
+    "docs": "jsdoc src/*.js src/controllers/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DD2480-group7-2020/ContinuousIntegration.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DD2480-group7-2020/ContinuousIntegration/issues"
+  },
+  "homepage": "https://github.com/DD2480-group7-2020/ContinuousIntegration#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "firebase": "^7.8.0",
+    "nodemon": "^2.0.2",
+    "request": "^2.88.0",
+    "uuid": "^3.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "jsdoc": "^3.6.3",
+    "mocha": "^7.0.1"
+
+  }
+}
