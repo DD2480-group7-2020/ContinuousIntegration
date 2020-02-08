@@ -1,12 +1,8 @@
-const myConfig = require("../config.json")
 const server_config = require('../config_server.json')
 
 const uuidv1 = require('uuid/v1')
 const fs = require('fs')
 
-const install = myConfig.install
-const syntax = myConfig.syntax
-const tests = myConfig.tests
 const { execSync } = require("child_process")
 
 var obj = {
@@ -28,11 +24,20 @@ function prepare_build_env() {
  * @author Gustav Ung
  * @param {string} repository The url to the git repository
  * @param {string} path The build path
- * @return {void}
+ * @return {json} JSON config object
  */
 function clone_repository(repository, path) {
     console.log("git clone -b test-dev " + repository + " " + path)
     execSync("git clone -b test-dev " + repository + " " + path)
+    var config = {}
+    try {
+        config = JSON.parse(fs.readFileSync(path + "/" + "config.json").toString())
+    } catch(error) {
+        console.log("Could not find or read config.json, does it exist?")
+        obj.logs.push("Could not find or read config.json, does it exist?")
+    }
+    return config
+
 }
 
 /**
@@ -84,8 +89,11 @@ function run(path, command) {
 module.exports = {
     execute: (git_repo) => {
         var path = prepare_build_env()
-        clone_repository(git_repo, path)
-        obj.flag = executeEverything(path, install, syntax, tests)
+        var config = clone_repository(git_repo, path)
+        if (!!config && !!config.install && !!config.syntax && !!config.tests) {
+            const {install, syntax, tests} = config
+            obj.flag = executeEverything(path, install, syntax, tests)
+        }
         clean_build_env(path)
         return obj
     }
