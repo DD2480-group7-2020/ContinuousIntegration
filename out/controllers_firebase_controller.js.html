@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: controllers/firebase_controller.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: controllers/firebase_controller.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>var firebase = require('firebase');
+
+var firebaseConfig = {
+    apiKey: "AIzaSyB5OBjUJzocNCGwWtGZds-RTyuYsH36ejw",
+    authDomain: "continuous-integration-62063.firebaseapp.com",
+    databaseURL: "https://continuous-integration-62063.firebaseio.com",
+    projectId: "continuous-integration-62063",
+    storageBucket: "continuous-integration-62063.appspot.com",
+    messagingSenderId: "641337962366",
+    appId: "1:641337962366:web:b20f07582f28abcd610d2f",
+    measurementId: "G-4HGNMFP2QG"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const database = firebase.database();
+const repo_path = database.ref('/repos/');
+const build_path = database.ref('/builds/');
+
+/**
+  *  Check if Repository exist in firebase under /repos/ path.
+  * @param {string}
+  * @returns {boolean}
+	*/
+async function checkRepo(repo_id){
+    var exist = false;
+    await repo_path.child(`${repo_id}/`).once('value', snapshot => {
+        exist = snapshot.val() ? true:false;
+    })
+    return exist;
+}
+
+/**
+  * Set repository information in firebase under /repos/ path.
+  * @param {string}
+  * @param {object}
+  * @returns {void}
+	*/
+function addRepo(repo_id, data){
+    repo_path.child(`${repo_id}/`).set(data)
+}
+
+/**
+  * Add build and logs under specific specific repository id under /build/ path.
+  * @param {string}
+  * @param {object}
+  * @param {object}
+  * @param {object}
+  * @returns {void}
+	*/
+function addBuild(repo_id, body, headers, log_build) {
+    var data = {
+        'type': headers["x-github-event"],
+        'log': log_build,
+        'build': body
+    }
+    const child_key_commit = body.head_commit.id
+    build_path.child(repo_id).child(child_key_commit).set(JSON.parse(JSON.stringify(data)));
+}
+
+/**
+  * Get all the repositories and the information about them.
+  * @returns {object}
+	*/
+async function getRepos(){
+    var data = null;
+    try {
+        await repo_path.once(('value'), snapshot => {
+            data = snapshot.val();
+        })
+    } catch(error){
+
+    } finally{
+        return data
+    }
+
+}
+
+/**
+ * Get all the builds from a specific repository id.
+ * @param {string}
+ * @returns {object}
+ */
+async function getBuilds(repo_id){
+    var data = null;
+    try {
+        await build_path.child(repo_id).once('value', snapshot => {
+            data = snapshot.val();
+        })
+    } catch (error) {
+
+    } finally {
+        return data
+    }
+}
+
+/**
+ * Get build from repository id and build id(head_commit.id)
+ * @param {string}
+ * @param {string}
+ * @returns {object}
+ */
+async function getBuild(repo_id, build_id) {
+    var data = null;
+    try {
+        await build_path.child(repo_id).child(build_id).once('value', snapshot => {
+            data = snapshot.val();
+        })
+    } catch (error) {
+
+    } finally {
+        return data;
+    }
+}
+
+module.exports = {
+    storeWebhook: async (body, header, logs) => {
+
+        const repo_id = body.repository.id;
+        const repo_exist = await checkRepo(repo_id)
+
+        if(!repo_exist){
+            addRepo(repo_id, body.repository);
+        }
+
+        addBuild(repo_id, body, header, logs);
+    },
+
+    getAllRepos: async () => {
+        const repos = await getRepos();
+        return repos
+    },
+
+    getRepoBuilds: async (id) => {
+        return await getBuilds(id);
+    },
+
+    getBuild: async(repo_id, build_id) => {
+        return await getBuild(repo_id, build_id);
+    }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addBuild">addBuild</a></li><li><a href="global.html#addRepo">addRepo</a></li><li><a href="global.html#build_status_response">build_status_response</a></li><li><a href="global.html#checkRepo">checkRepo</a></li><li><a href="global.html#clean_build_env">clean_build_env</a></li><li><a href="global.html#clone_repository">clone_repository</a></li><li><a href="global.html#executeEverything">executeEverything</a></li><li><a href="global.html#get_sha">get_sha</a></li><li><a href="global.html#get_url">get_url</a></li><li><a href="global.html#getBuild">getBuild</a></li><li><a href="global.html#getBuilds">getBuilds</a></li><li><a href="global.html#getRepos">getRepos</a></li><li><a href="global.html#prepare_build_env">prepare_build_env</a></li><li><a href="global.html#run">run</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sat Feb 08 2020 18:23:23 GMT+0100 (GMT+01:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
