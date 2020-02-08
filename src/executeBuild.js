@@ -1,12 +1,8 @@
-const myConfig = require("../config.json")
 const server_config = require('../config_server.json')
 
 const uuidv1 = require('uuid/v1')
 const fs = require('fs')
 
-const install = myConfig.install
-const syntax = myConfig.syntax
-const tests = myConfig.tests
 const { execSync } = require("child_process")
 
 var obj = {
@@ -17,14 +13,14 @@ var obj = {
 /**
  * Prepares a build environment for the scripts to run in.
  * @author Gustav Ung
- * @return {void}
+ * @return {string} the build environment
  */
 function prepare_build_env() {
     return server_config.build_path_prefix + uuidv1()
 }
 
 /**
- * Clones a git reposityory given a clonable repository url at a given build path
+ * Clones a git repository given a clonable repository url at a given build path
  * @author Gustav Ung
  * @param {string} repository The url to the git repository
  * @param {string} path The build path
@@ -84,6 +80,12 @@ module.exports = {
     execute: (git_repo) => {
         var path = prepare_build_env()
         clone_repository(git_repo, path)
+
+        const myConfig = require(path + "/config.json")
+        const install = myConfig.install
+        const syntax = myConfig.syntax
+        const tests = myConfig.tests
+
         obj.flag = executeEverything(path, install, syntax, tests)
         clean_build_env(path)
         return obj
