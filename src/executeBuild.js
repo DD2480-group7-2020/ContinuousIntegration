@@ -18,7 +18,7 @@ function prepare_build_env() {
 /**
  * Clones a git reposityory given a clonable repository url at a given build path
  * @author Gustav Ung
- * @param {json} obj - logger and status object
+ * @param {object} obj - logger and status object
  * @param {string} repository The url to the git repository
  * @param {string} path The build path
  * @return {array} an array of the logger and status object as well as a config
@@ -51,10 +51,10 @@ function clean_build_env(path) {
 /**
  * Runs three shell commands
  * @author Love Almgren
- * @param {json} obj - logger and status object
+ * @param {object} obj - logger and status object
  * @param {string} path the path where the shell commands are run
  * @param {string} install, syntax tests the three commands to run
- * @return {json} obj - logger and status object
+ * @return {object} obj - logger and status object
  */
 function executeEverything(obj, path, install, syntax, tests) {
     obj = run(obj, path, install)
@@ -72,9 +72,9 @@ function executeEverything(obj, path, install, syntax, tests) {
  * Runs the provided shell command and returns if it succeded or not.
  * This function also mutates a global log file.
  * @author Love Almgren
- * @param {json} obj - logger and status object
+ * @param {object} obj - logger and status object
  * @param {string} command - The command to run.
- * @return {json} obj - logger and status object
+ * @return {object} obj - logger and status object
 */
 function run(obj, path, command) {
     if(command === "") {

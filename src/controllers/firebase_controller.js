@@ -19,8 +19,8 @@ const build_path = database.ref('/builds/');
 
 /**
   *  Check if Repository exist in firebase under /repos/ path.
-  * @param {string}
-  * @returns {boolean}
+  * @param {string} - The repository id
+  * @returns {boolean} - Whether the repository exists or not
 	*/
 async function checkRepo(repo_id){
     var exist = false;
@@ -32,8 +32,8 @@ async function checkRepo(repo_id){
 
 /**
   * Set repository information in firebase under /repos/ path.
-  * @param {string}
-  * @param {object}
+  * @param {string} - The repository id
+  * @param {object} - The request body from github
   * @returns {void}
 	*/
 function addRepo(repo_id, data){
@@ -42,10 +42,10 @@ function addRepo(repo_id, data){
 
 /**
   * Add build and logs under specific specific repository id under /build/ path.
-  * @param {string}
-  * @param {object}
-  * @param {object}
-  * @param {object}
+  * @param {string} - The repository id
+  * @param {object} - The request body from github
+  * @param {object} - The request headers from github
+  * @param {object} - A logger object
   * @returns {void}
 	*/
 function addBuild(repo_id, body, headers, log_build) {
@@ -60,7 +60,7 @@ function addBuild(repo_id, body, headers, log_build) {
 
 /**
   * Get all the repositories and the information about them.
-  * @returns {object}
+  * @returns {object} - repository data
 	*/
 async function getRepos(){
     var data = null;
@@ -78,7 +78,7 @@ async function getRepos(){
 
 /**
  * Get all the builds from a specific repository id.
- * @param {string}
+ * @param {string} - build data from a repository
  * @returns {object}
  */
 async function getBuilds(repo_id){
@@ -96,9 +96,9 @@ async function getBuilds(repo_id){
 
 /**
  * Get build from repository id and build id(head_commit.id)
- * @param {string}
- * @param {string}
- * @returns {object}
+ * @param {string} - The repository id
+ * @param {string} - the build id
+ * @returns {object} - a build object
  */
 async function getBuild(repo_id, build_id) {
     var data = null;
