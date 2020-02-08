@@ -5,10 +5,6 @@ const fs = require('fs')
 
 const { execSync } = require("child_process")
 
-var obj = {
-    flag: false,
-    logs: []
-}
 
 /**
  * Prepares a build environment for the scripts to run in.
@@ -22,11 +18,12 @@ function prepare_build_env() {
 /**
  * Clones a git reposityory given a clonable repository url at a given build path
  * @author Gustav Ung
+ * @param {json} obj - logger and status object
  * @param {string} repository The url to the git repository
  * @param {string} path The build path
- * @return {json} JSON config object
+ * @return {array} an array of the logger and status object as well as a config
  */
-function clone_repository(repository, path) {
+function clone_repository(obj, repository, path) {
     console.log("git clone -b test-dev " + repository + " " + path)
     execSync("git clone -b test-dev " + repository + " " + path)
     var config = {}
@@ -36,7 +33,7 @@ function clone_repository(repository, path) {
         console.log("Could not find or read config.json, does it exist?")
         obj.logs.push("Could not find or read config.json, does it exist?")
     }
-    return config
+    return [obj, config]
 
 }
 
@@ -52,47 +49,63 @@ function clean_build_env(path) {
 }
 
 /**
- * Runs three shell commands defined globally
+ * Runs three shell commands
  * @author Love Almgren
+ * @param {json} obj - logger and status object
  * @param {string} path the path where the shell commands are run
  * @param {string} install, syntax tests the three commands to run
- * @return whether they all succeded or not.
+ * @return {json} obj - logger and status object
  */
-function executeEverything(path, install, syntax, tests) {
-    return run(path, install) && run(path, syntax) && run(path, tests)
+function executeEverything(obj, path, install, syntax, tests) {
+    obj = run(obj, path, install)
+    if (obj.flag) {
+      obj = run(obj, path, syntax)
+    }
+    if (obj.flag) {
+      obj = run(obj, path, tests)
+    }
+
+    return obj
 }
 
 /**
  * Runs the provided shell command and returns if it succeded or not.
  * This function also mutates a global log file.
  * @author Love Almgren
+ * @param {json} obj - logger and status object
  * @param {string} command - The command to run.
- * @return {boolean} whether the command ran successfully or not
+ * @return {json} obj - logger and status object
 */
-function run(path, command) {
-    var truth = true
+function run(obj, path, command) {
     if(command === "") {
-        return true
+        return obj.flag = true
     }
     try {
         console.log("running command " + command + " from: ", path)
         var res = execSync(command,
              {cwd: path});
         obj.logs.push(res.toString())
+        obj.flag = true
     } catch(error) {
         obj.logs.push(error.message)
-        truth = false
+        obj.flag = false
     }
-    return truth
+    return obj
 }
 
 module.exports = {
     execute: (git_repo) => {
+        var obj = {
+            flag: false,
+            logs: []
+        }
         var path = prepare_build_env()
-        var config = clone_repository(git_repo, path)
+        var obj_conf = clone_repository(obj, git_repo, path)
+        obj = obj_conf[0]
+        var config = obj_conf[1]
         if (!!config && !!config.install && !!config.syntax && !!config.tests) {
             const {install, syntax, tests} = config
-            obj.flag = executeEverything(path, install, syntax, tests)
+            obj = executeEverything(obj, path, install, syntax, tests)
         }
         clean_build_env(path)
         return obj
