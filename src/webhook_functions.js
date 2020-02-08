@@ -1,15 +1,34 @@
 const config = require('../config_server.json')
 
+/**
+ * Get commit hash of the commit
+ * @author Ramiz Dündar
+ * @param {JSON} req to the maın URL
+ * @return {string}
+ */
 function get_sha(req) {
     var sha = req.body.head_commit.id
     return sha
 }
 
+/**
+ * Get URL of the commit
+ * @author Ramiz Dündar
+ * @param {JSON} req Request to the maın URL
+ * @return {string}
+ */
 function get_url(req) {
     var sha = get_sha(req)
     return 'https://api.github.com/repos/' + req.body.repository.full_name + '/statuses/' + sha
 }
 
+/**
+ * Set the status of the commit
+ * @author Ramiz Dündar
+ * @param {JSON} req Request to the maın URL
+ * @param {string} status Status to be set
+ * @return {JSON} Request sent
+ */
 function build_status_response(req, status) {
     var url = get_url(req)
     var sha = get_sha(req)
