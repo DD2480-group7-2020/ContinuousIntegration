@@ -48,7 +48,7 @@ describe('Webhook functions', function() {
 
             var sent = helper.build_status_response(req, "failure")
             
-            assert.equal(sent.method, "POS")
+            assert.equal(sent.method, "POST")
             assert.equal(sent.json, true)
             assert.equal(sent.headers['User-Agent'], "node.js")
             assert.equal(sent.headers['Content-Type'], "application/json")
