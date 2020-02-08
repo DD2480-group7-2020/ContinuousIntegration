@@ -31,7 +31,8 @@ function prepare_build_env() {
  * @return {void}
  */
 function clone_repository(repository, path) {
-    execSync("git clone -b develop " + repository + " " + path)
+    console.log("git clone -b test-dev " + repository + " " + path)
+    execSync("git clone -b test-dev " + repository + " " + path)
 }
 
 /**

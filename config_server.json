@@ -1,5 +1,5 @@
 {
-    "token": "Instert your OAUTH key here",
-    "database": "https://aws_ip:3002/repo",
+    "token": "Insert your OAUTH token here",
+    "database": "http://ubuntu@ec2-54-198-38-54.compute-1.amazonaws.com:3001/repo",
     "build_path_prefix": "/tmp/"
 }

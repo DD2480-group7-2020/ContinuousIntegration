@@ -22,7 +22,9 @@ app.post('/', async(req, res) => {
     var pending_response = helper.build_status_response(req, 'pending')
     res.send(pending_response);
     const repository = req.body.repository
-    var logs = executeBuild.execute(repository.html_url)
+
+    var logs = executeBuild.execute(repository.clone_url)
+
     var build_response
     if (logs.flag) {
       build_response = helper.build_status_response(req, 'success')
