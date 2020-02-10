@@ -1,4 +1,4 @@
-# Test End Automated with OAUTH
+# Test End Automated with OAUTH 2
 This project is a continuous integration (CI) server integrated with Github and Firebase. At the moment, it is able to test and build small projects.
 
 # Running
